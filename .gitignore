@@ -1,0 +1,20 @@
+# Ignore IntelliJ project files
+.idea/
+*.iml
+
+# Ignore build directories
+/target/
+/build/
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore OS system files
+.DS_Store
+Thumbs.db
+
+# Ignore environment variables
+.env
+application.properties
+application.yml
