@@ -1,0 +1,113 @@
+version: "3.8"
+
+services:
+  # Config Server
+#  config-server:
+#    build: ./config-server
+#    container_name: config-server
+#    ports:
+#      - "8888:8888"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=default
+#    networks:
+#      - bank-network
+#
+#  # Eureka Server
+#  eureka-server:
+#    build: ./eureka-server
+#    container_name: eureka-server
+#    ports:
+#      - "8761:8761"
+#    depends_on:
+#      - config-server
+#    environment:
+#      - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
+#    networks:
+#      - bank-network
+
+  # MySQL for Account Service
+  mysql-account:
+    image: mysql:8
+    container_name: mysql-account
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: account_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    networks:
+      - bank-network
+
+#   MySQL for Transaction Service
+  mysql-transaction:
+    image: mysql:8
+    container_name: mysql-transaction
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: transaction_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3308:3306"
+    networks:
+      - bank-network
+
+  # MySQL for Bank Statement Service
+  mysql-bank-statement:
+    image: mysql:8
+    container_name: mysql-bank-statement
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: statement_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3309:3306"
+    networks:
+      - bank-network
+
+  # MongoDB for Notification Service
+  mongodb:
+    image: mongo:latest
+    container_name: mongo-notifications
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ramon
+      MONGO_INITDB_ROOT_PASSWORD: ramon
+      MONGO_INITDB_DATABASE: notifications_db
+    networks:
+      - bank-network
+
+  notification-service:
+    environment:
+      - EMAIL_FROM_ADDRESS=${EMAIL_FROM_ADDRESS}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+    env_file:
+      - .env
+
+  # MailDev for testing emails
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
+    restart: always
+    ports:
+      - "1080:1080" # Web UI
+      - "1025:1025" # SMTP Server
+    networks:
+      - bank-network
+
+networks:
+  bank-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
