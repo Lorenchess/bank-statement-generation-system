@@ -10,8 +10,13 @@ eureka:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://${eureka.instance.hostname}/${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}/8761/eureka/
   server:
     enable-self-preservation: true
 server:
   port: 8761
+
+logging:
+  level:
+    com.netflix.eureka: OFF
+    com.netflix.discovery: OFF

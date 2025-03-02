@@ -86,12 +86,12 @@ services:
     networks:
       - bank-network
 
-  notification-service:
-    environment:
-      - EMAIL_FROM_ADDRESS=${EMAIL_FROM_ADDRESS}
-      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
-    env_file:
-      - .env
+#  notification-service:
+#    environment:
+#      - EMAIL_FROM_ADDRESS=${EMAIL_FROM_ADDRESS}
+#      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+#    env_file:
+#      - .env
 
   # MailDev for testing emails
   maildev:

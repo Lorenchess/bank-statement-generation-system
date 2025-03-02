@@ -4,7 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://ramon:ramon@mongodb:27017/notifications_db?authSource=admin
+      uri: mongodb://ramon:ramon@localhost:27017/notifications_db?authSource=admin
       auto-index-creation: true
 
   mail:
@@ -32,4 +32,4 @@ email:
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://host.docker.internal:8761/eureka/
