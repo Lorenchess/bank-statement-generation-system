@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: account-service
+          uri: lb://account-service
+          predicates:
+            - Path=/api/accounts/**
+        - id: transaction-service
+          uri: lb://transaction-service
+          predicates:
+            - Path=/api/transactions/**
+        - id: bank-statement-service
+          uri: lb://bank-statement-service
+          predicates:
+            - Path=/api/statements/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notifications/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://host.docker.internal:8761/eureka/
