@@ -22,6 +22,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String accountNumber;
 
     @Enumerated(EnumType.STRING)
@@ -30,8 +31,8 @@ public class Account {
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
 
     private BigDecimal balance;
 

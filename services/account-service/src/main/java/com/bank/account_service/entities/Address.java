@@ -6,10 +6,9 @@ import lombok.*;
 @Embeddable
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address {
-    private Long id;
 
     private String street;
 
